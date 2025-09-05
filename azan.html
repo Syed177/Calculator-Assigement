@@ -1,47 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Console Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    
-  <div class="calculator" role="application" aria-label="Calculator">
-    <div class="display" aria-live="polite">
-      <div class="expr" id="expr">0</div>
-      <div class="result" id="result">0</div>
+<body class="flex items-center justify-center h-screen bg-gray-900">
+  <div class="bg-gray-800 text-white rounded-2xl shadow-2xl p-6 w-80">
+    <h1 class="text-xl font-bold mb-4 text-center">Calculator</h1>
+
+    <!-- Display -->
+    <input id="display" type="text" disabled
+      class="w-full mb-4 text-right text-2xl p-3 rounded-lg bg-gray-700 focus:outline-none" />
+
+    <!-- Buttons -->
+    <div class="grid grid-cols-4 gap-3">
+      <button class="btn" onclick="appendValue('7')">7</button>
+      <button class="btn" onclick="appendValue('8')">8</button>
+      <button class="btn" onclick="appendValue('9')">9</button>
+      <button class="btn bg-orange-500" onclick="appendValue('/')">÷</button>
+
+      <button class="btn" onclick="appendValue('4')">4</button>
+      <button class="btn" onclick="appendValue('5')">5</button>
+      <button class="btn" onclick="appendValue('6')">6</button>
+      <button class="btn bg-orange-500" onclick="appendValue('*')">×</button>
+
+      <button class="btn" onclick="appendValue('1')">1</button>
+      <button class="btn" onclick="appendValue('2')">2</button>
+      <button class="btn" onclick="appendValue('3')">3</button>
+      <button class="btn bg-orange-500" onclick="appendValue('-')">−</button>
+
+      <button class="btn" onclick="appendValue('0')">0</button>
+      <button class="btn" onclick="appendValue('.')">.</button>
+      <button class="btn bg-red-500" onclick="clearDisplay()">C</button>
+      <button class="btn bg-orange-500" onclick="appendValue('+')">+</button>
     </div>
 
-    <div class="keys">
-      <button class="key clear" data-action="clear">C</button>
-      <button class="key" data-action="back">⌫</button>
-      <button class="key" data-action="percent">%</button>
-      <button class="key op" data-value="/">÷</button>
-
-      <button class="key" data-value="7">7</button>
-      <button class="key" data-value="8">8</button>
-      <button class="key" data-value="9">9</button>
-      <button class="key op" data-value="*">×</button>
-
-      <button class="key" data-value="4">4</button>
-      <button class="key" data-value="5">5</button>
-      <button class="key" data-value="6">6</button>
-      <button class="key op" data-value="-">−</button>
-
-      <button class="key" data-value="1">1</button>
-      <button class="key" data-value="2">2</button>
-      <button class="key" data-value="3">3</button>
-      <button class="key op" data-value="+">+</button>
-
-      <button class="key" data-value="0" style="grid-column: span 2;">0</button>
-      <button class="key" data-value=".">.</button>
-      <button class="key equal" data-action="equals">=</button>
-    </div>
+    <button class="w-full mt-4 bg-green-600 hover:bg-green-700 p-3 rounded-lg text-lg font-bold"
+      onclick="calculate()">=</button>
   </div>
 
+  <script>
+    const display = document.getElementById('display');
 
-  <script src="app.js"></script>
+    function appendValue(value) {
+      display.value += value;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function calculate() {
+      try {
+        const result = eval(display.value);
+        console.log("Result:", result); // logs to console
+        display.value = result;
+      } catch (error) {
+        console.error("Invalid expression", error);
+        display.value = 'Error';
+      }
+    }
+
+    // Make buttons styled consistently
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.classList.add(
+        'p-3','rounded-lg','bg-gray-600','hover:bg-gray-500','font-bold','text-lg'
+      );
+    });
+  </script>
 </body>
 </html>
